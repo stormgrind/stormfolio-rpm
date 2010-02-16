@@ -8,7 +8,8 @@ Release: 	1
 License: 	LGPL
 BuildArch: 	noarch
 Group: 		Web/Portlet
-Source:		http://downloads.sourceforge.net/project/jboss/%{project_name}/Portal/%{project_version}/%{project_name}-%{project_version}-jbossas.tar.gz
+Source0:	http://downloads.sourceforge.net/project/jboss/%{project_name}/Portal/%{project_version}/%{project_name}-%{project_version}-jbossas.tar.gz
+Source1:        %{name}.init
 URL: 		http://www.jboss.org/gatein
 Vendor: 	RedHat, eXo platform.
 Packager: 	Luca Stancapiano <jedim@vige.it>
@@ -34,6 +35,9 @@ rm -rf $RPM_BUILD_ROOT
 
 install -d -m 755 $RPM_BUILD_ROOT/opt/%{name}-%{version}
 cp -R . $RPM_BUILD_ROOT/opt/%{name}-%{version}
+
+install -d -m 755 $RPM_BUILD_ROOT%{_initrddir}
+install -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/sysconfig
  
