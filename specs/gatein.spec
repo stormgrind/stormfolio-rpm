@@ -15,6 +15,8 @@ Vendor: 	RedHat, eXo platform.
 Packager: 	Luca Stancapiano <jedim@vige.it>
 Requires:       java-1.6.0-openjdk
 Requires:       shadow-utils
+Requires:       initscripts
+Requires(post): /sbin/chkconfig
 BuildRoot:      %{_tmppath}/%{name}-3.0.0-Beta05-%{release}-root-%(%{__id_u} -n)
 
 %description
@@ -47,6 +49,10 @@ echo "GATEIN_HOME=/opt/%{name}-%{version}"   >> $RPM_BUILD_ROOT/etc/sysconfig/%{
 %pre
 /usr/sbin/groupadd -r %{name} 2>/dev/null || :
 /usr/sbin/useradd -c "%{name}" -r -s /bin/bash -d /opt/%{name}-%{version} -g %{name} %{name} 2>/dev/null || :
+
+%post
+/sbin/chkconfig --add %{name}
+/sbin/chkconfig %{name} on
 
 %clean
 rm -rf $RPM_BUILD_ROOT
