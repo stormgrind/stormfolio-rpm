@@ -92,7 +92,7 @@ JBOSS_UDP_PORT_EJB3=${JBOSS_UDP_PORT_EJB3:-"43333"}
 JBOSS_UDP_PORT_EJB3SFSB=${JBOSS_UDP_PORT_EJB3SFSB:-"45551"}
 
 #define the timeout period for starting the server
-JBOSS_START_TIMEOUT=${JBOSS_START_TIMEOUT:-"240"}
+JBOSS_START_TIMEOUT=${JBOSS_START_TIMEOUT:-"300"}
                                                                                 
 #define the timeout period for stopping the server
 JBOSS_STOP_TIMEOUT=${JBOSS_STOP_TIMEOUT:-"180"}
