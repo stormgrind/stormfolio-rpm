@@ -50,6 +50,8 @@ JAVAPTH=${JAVAPTH:-"$JAVA_HOME/bin"}
 #define the classpath for the shutdown class
 JBOSSCP=${JBOSSCP:-"$JBOSS_HOME/bin/shutdown.jar:$JBOSS_HOME/client/jbossall-client.jar"}
 
+JBOSSCONF=${JBOSSCONF:-"default"}
+
 #define the script to use to start jboss
 JBOSSSH=${JBOSSSH:-"$JBOSS_HOME/bin/run.sh -c $JBOSSCONF"}
 
@@ -181,8 +183,7 @@ RETVAL=0
 
 function procrunning() {
    procid=0
-   JBOSSSCRIPT=$(echo $JBOSS_HOME/bin/run.sh|sed 's/\//\\\//g')
-   for procid in `pidof -x "$JBOSSSCRIPT"`; do
+   for procid in `pidof -x "/bin/sh"`; do
        if [ ! -z $JBOSS_IP ]; then
           ps -fp $procid | grep $JBOSSCONF | grep $JBOSS_IP  > /dev/null && pid=$procid
        else
