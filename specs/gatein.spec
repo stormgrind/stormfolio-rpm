@@ -1,9 +1,9 @@
 %define project_name GateIn
-%define project_version 3.0.0-Beta05
+%define project_version 3.0.0-CR01
 
 Summary: 	The Best of eXo and JBoss Portal platform!
 Name: 		gatein
-Version: 	3.0.0.Beta05
+Version: 	3.0.0.CR1
 Release: 	1
 License: 	LGPL
 BuildArch: 	noarch
@@ -17,7 +17,7 @@ Requires:       java-1.6.0-openjdk
 Requires:       shadow-utils
 Requires:       initscripts
 Requires(post): /sbin/chkconfig
-BuildRoot:      %{_tmppath}/%{name}-3.0.0-Beta05-%{release}-root-%(%{__id_u} -n)
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
 GateIn is a set of projects revolving aroung the main project called "GateIn Portal".
@@ -62,5 +62,8 @@ rm -rf $RPM_BUILD_ROOT
 /
 
 %changelog
-* Mon Feb 15 2010 Luca Stancapiano 3.0.0.Beta-05
+* Thu Feb 18 2010 Marek Goldmann 3.0.0.CR1
+- Upgrade to 3.0.0.CR1
+
+* Mon Feb 15 2010 Luca Stancapiano 3.0.0.Beta05
 - Initial release
