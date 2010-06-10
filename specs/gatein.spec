@@ -1,9 +1,10 @@
 %define project_name GateIn
-%define project_version 3.0.0-CR01
+%define project_version 3.0.0-FINAL
+%define project_version_package 3.0.0-GA
 
 Summary: 	The Best of eXo and JBoss Portal platform!
 Name: 		gatein
-Version: 	3.0.0.CR1
+Version: 	3.0.0.FINAL
 Release: 	1
 License: 	LGPL
 BuildArch: 	noarch
@@ -30,7 +31,7 @@ The aim is to provide both an intuitive portal to use as-is and a portal framewo
 %define __jar_repack %{nil}
 
 %prep
-%setup -n %{project_name}-%{project_version}
+%setup -n %{project_name}-%{project_version_package}
 
 %install
 rm -rf $RPM_BUILD_ROOT
