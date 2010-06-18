@@ -1,0 +1,134 @@
+#!/bin/sh
+#
+# mobicents-media-server         Manages Mobicents Media Server service
+#
+# chkconfig: 345 85 35
+# description: Mobicents Media Server service
+# processname: java
+
+### BEGIN INIT INFO
+# Provides: mobicents-media-server
+# Required-Start: $network $syslog
+# Required-Stop: $network
+# Default-Start:
+# Default-Stop:
+# Short-Description: Mobicents Media Server service
+# Description: Mobicents Media Server service
+### END INIT INFO
+
+PID_FILE=/var/lock/mobicents-media-server.pid
+
+# Source function library.
+. /etc/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Check that networking is up.
+[ ${NETWORKING} = "no" ] && exit 0
+
+[ -f /etc/sysconfig/mobicents-all ] && . /etc/sysconfig/mobicents-all
+
+NAME="$(basename $0)"
+unset ISBOOT
+if [ "${NAME:0:1}" = "S" -o "${NAME:0:1}" = "K" ]; then
+    NAME="${NAME:3}"
+    ISBOOT="1"
+fi
+
+function procrunning() {
+    procid=0
+    for procid in `pidof java`; do
+        ps -fp $procid | grep $NAME > /dev/null && pid=$procid
+    done
+}
+
+function success_or_failure() {
+    if [ $RETVAL -eq 0 ]; then
+        echo_success
+    else
+        echo_failure
+    fi
+
+    echo
+}
+
+start() {
+    echo -n "Starting ${NAME}: "
+
+    cd $MOBICENTS_ALL_HOME
+    export MMS_HOME=$MOBICENTS_ALL_HOME/$NAME
+    $NAME/bin/init_redhat.sh start > /dev/null
+    RETVAL=$?
+
+    success_or_failure
+
+    return $RETVAL
+}
+
+stop() {
+    echo -n "Stopping ${NAME}: "
+
+    pid=0
+    procrunning
+
+    if [ $pid = '0' ]; then
+        echo -n -e "No process is currently running "
+        RETVAL=0
+        success_or_failure
+        return $RETVAL
+    fi
+
+    kill -s HUP $pid
+    
+    RETVAL=$?
+
+    success_or_failure
+
+    return $RETVAL
+}
+
+status() {
+    pid=0
+    procrunning
+    if [ $pid == 0 ]; then
+        if [ -f $JBOSSLOCK ]; then
+            echo "${NAME} is dead but subsys locked";
+            return 2
+        fi
+        if [ -f $PID_FILE ]; then
+            echo "${NAME} is dead but pid file exists";
+            return 3
+        fi
+        echo "${NAME} is stopped";
+        return 0
+    else
+        echo "${NAME} (pid $pid) is running...";
+        return 0
+    fi
+}
+
+case "$1" in
+start)
+    start
+    ;;
+stop)
+    stop
+    ;;
+restart|reload)
+    stop
+    sleep 1
+    start
+    ;;
+status)
+    status
+    ;;
+help)
+    echo "usage: ${NAME} (start|stop|status|restart|help)"
+    ;;
+*)
+    echo "usage: ${NAME} (start|stop|status|restart|help)"
+    exit 1
+esac
+
+exit $RETVAL
