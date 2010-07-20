@@ -4,7 +4,7 @@
 
 Summary: 	The Best of eXo and JBoss Portal platform!
 Name: 		gatein
-Version: 	3.0.0.FINAL
+Version: 	3.1.0.FINAL
 Release: 	1
 License: 	LGPL
 BuildArch: 	noarch
