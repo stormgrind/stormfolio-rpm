@@ -1,6 +1,6 @@
 %define project_name GateIn
-%define project_version 3.0.0-FINAL
-%define project_version_package 3.0.0-GA
+%define project_version 3.1.0-FINAL
+%define project_version_package 3.1.0-GA
 
 Summary: 	The Best of eXo and JBoss Portal platform!
 Name: 		gatein
@@ -63,6 +63,9 @@ rm -rf $RPM_BUILD_ROOT
 /
 
 %changelog
+ * Tue Jul 28 2010 Marek Goldmann 3.1.0.FINAL
+ - Upgrade to 3.1.0.FINAL
+
 * Thu Feb 18 2010 Marek Goldmann 3.0.0.CR1
 - Upgrade to 3.0.0.CR1
 
